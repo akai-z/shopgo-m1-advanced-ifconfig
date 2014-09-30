@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Shopgo_AdvIfconfig>
+            <active>true</active>
+            <codePool>community</codePool>
+            <depends>
+                <Shopgo_Core/>
+            </depends>
+        </Shopgo_AdvIfconfig>
+    </modules>
+</config>
