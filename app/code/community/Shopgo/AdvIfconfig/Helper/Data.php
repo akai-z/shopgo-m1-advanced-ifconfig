@@ -1,7 +1,39 @@
 <?php
+/**
+ * ShopGo
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the GNU General Public License (GPLv2)
+ * that is bundled with this package in the file COPYING.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.gnu.org/licenses/gpl-2.0.html
+ *
+ * @category    Shopgo
+ * @package     Shopgo_AdvIfconfig
+ * @copyright   Copyright (c) 2014 Shopgo. (http://www.shopgo.me)
+ * @license     http://www.gnu.org/licenses/gpl-2.0.html  GNU General Public License (GPLv2)
+ */
 
+
+/**
+ * Data helper
+ *
+ * @category    Shopgo
+ * @package     Shopgo_AdvIfconfig
+ * @author      Ammar <ammar@shopgo.me>
+ */
 class Shopgo_AdvIfconfig_Helper_Data extends Shopgo_Core_Helper_Abstract
 {
+    /**
+     * Check system config node depends
+     *
+     * @param string $section
+     * @param string $group
+     * @param string $field
+     * @param boolean $result
+     * @return boolean
+     */
     public function checkSystemConfigNodeDepends($section, $group, $field, $result = false)
     {
         $depends = $this->getSystemConfigNodeDepends($section, $group, $field);
@@ -17,6 +49,14 @@ class Shopgo_AdvIfconfig_Helper_Data extends Shopgo_Core_Helper_Abstract
         return $result;
     }
 
+    /**
+     * Get system config node depends
+     *
+     * @param string $sectionName
+     * @param string $groupName
+     * @param string $fieldName
+     * @return object
+     */
     public function getSystemConfigNodeDepends($sectionName, $groupName = null, $fieldName = null)
     {
         $config = Mage::getSingleton('adminhtml/config');
@@ -47,6 +87,14 @@ class Shopgo_AdvIfconfig_Helper_Data extends Shopgo_Core_Helper_Abstract
         return null;
     }
 
+    /**
+     * Get store config with depends flag
+     *
+     * @param string $configPath
+     * @param array $requiredDepends
+     * @param string $type
+     * @return boolean
+     */
     public function getStoreConfigWithDependsFlag($configPath, $requiredDepends = array(), $type = 'tree')
     {
         $ifConfig = Mage::getStoreConfigFlag($configPath);

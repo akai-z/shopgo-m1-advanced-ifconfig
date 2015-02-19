@@ -1,9 +1,32 @@
 <?php
+/**
+ * ShopGo
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the GNU General Public License (GPLv2)
+ * that is bundled with this package in the file COPYING.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.gnu.org/licenses/gpl-2.0.html
+ *
+ * @category    Shopgo
+ * @package     Shopgo_AdvIfconfig
+ * @copyright   Copyright (c) 2014 Shopgo. (http://www.shopgo.me)
+ * @license     http://www.gnu.org/licenses/gpl-2.0.html  GNU General Public License (GPLv2)
+ */
 
+
+/**
+ * Layout model
+ *
+ * @category    Shopgo
+ * @package     Shopgo_AdvIfconfig
+ * @author      Ammar <ammar@shopgo.me>
+ */
 class Shopgo_AdvIfconfig_Model_Magento_Core_Layout extends Mage_Core_Model_Layout
 {
     /**
-     * Enter description here...
+     * Modified core generate action method
      *
      * @param Varien_Simplexml_Element $node
      * @param Varien_Simplexml_Element $parent
@@ -15,8 +38,24 @@ class Shopgo_AdvIfconfig_Model_Magento_Core_Layout extends Mage_Core_Model_Layou
             $ifConfig = Mage::getStoreConfigFlag($configPath);
             $nodeArray = (array)$node;
 
-            if ($nodeArray['depends_check'] && $ifConfig) {
-                if ($nodeArray['depends_check'] == 1 || $nodeArray['depends_check'] == 'tree') {
+            $advIfconfig = null;
+            $dependsCheck = false;
+            $requiredDepends = false;
+
+            if (isset($nodeArray['adv_ifconfig'])) {
+                $advIfconfig = (array)$nodeArray['adv_ifconfig'];
+
+                if (isset($advIfconfig['depends_check'])) {
+                    $dependsCheck = $advIfconfig['depends_check'];
+                }
+
+                if (isset($advIfconfig['required_depends'])) {
+                    $requiredDepends = $advIfconfig['required_depends'];
+                }
+            }
+
+            if ($ifConfig && $dependsCheck) {
+                if ($dependsCheck == 1 || $dependsCheck == 'tree') {
                     $configPath = explode('/', $configPath);
                     $ifConfig = $ifConfig
                         && Mage::helper('advifconfig')->checkSystemConfigNodeDepends(
@@ -27,10 +66,10 @@ class Shopgo_AdvIfconfig_Model_Magento_Core_Layout extends Mage_Core_Model_Layou
                         );
                 }
 
-                if (($nodeArray['depends_check'] == 1 || $nodeArray['depends_check'] == 'required')
-                    && $nodeArray['required_depends']) {
+                if (($dependsCheck == 1 || $dependsCheck == 'required')
+                    && $requiredDepends) {
                     $additionalDepends = array_map('trim',
-                        explode(',', $nodeArray['required_depends'])
+                        explode(',', $requiredDepends)
                     );
 
                     foreach ($additionalDepends as $depend) {
@@ -41,6 +80,20 @@ class Shopgo_AdvIfconfig_Model_Magento_Core_Layout extends Mage_Core_Model_Layou
 
             if (!$ifConfig) {
                 return $this;
+            }
+
+            if (isset($advIfconfig['custom_rules'])) {
+                $data = array_merge(
+                    array('ifconfig' => false), // Default value for custom rules ifconfig
+                    (array)$advIfconfig['custom_rules']
+                );
+                $data = new Varien_Object($data);
+
+                Mage::dispatchEvent('adv_ifconfig_custom_rules', $data);
+
+                if (!$data->getIfconfig()) {
+                    return $this;
+                }
             }
         }
 
@@ -62,12 +115,8 @@ class Shopgo_AdvIfconfig_Model_Magento_Core_Layout extends Mage_Core_Model_Layou
             $args = (array)$node->children();
             unset($args['@attributes']);
 
-            if (isset($args['depends_check'])) {
-                unset($args['depends_check']);
-            }
-
-            if (isset($args['required_depends'])) {
-                unset($args['required_depends']);
+            if (isset($args['adv_ifconfig'])) {
+                unset($args['adv_ifconfig']);
             }
 
             foreach ($args as $key => $arg) {
