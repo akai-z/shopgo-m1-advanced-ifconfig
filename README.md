@@ -12,3 +12,4 @@ Ammar (<ammar@shopgo.me>)
 ### License ###
 
 OSL-3.0
+AFL-3.0

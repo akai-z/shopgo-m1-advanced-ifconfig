@@ -1,7 +1,10 @@
 {
     "name": "shopgo/Shopgo_AdvIfconfig",
     "type": "magento-module",
-    "license": "OSL-3.0",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
     "description": "Advanced Ifconfig Magento extension",
     "require": {
         "magento-hackathon/magento-composer-installer": "*",
