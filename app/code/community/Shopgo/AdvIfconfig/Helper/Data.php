@@ -31,8 +31,8 @@ class Shopgo_AdvIfconfig_Helper_Data extends Shopgo_Core_Helper_Abstract
      * @param string $section
      * @param string $group
      * @param string $field
-     * @param boolean $result
-     * @return boolean
+     * @param bool $result
+     * @return bool
      */
     public function checkSystemConfigNodeDepends($section, $group, $field, $result = false)
     {
@@ -55,7 +55,7 @@ class Shopgo_AdvIfconfig_Helper_Data extends Shopgo_Core_Helper_Abstract
      * @param string $sectionName
      * @param string $groupName
      * @param string $fieldName
-     * @return object
+     * @return Varien_Simplexml_Element|null
      */
     public function getSystemConfigNodeDepends($sectionName, $groupName = null, $fieldName = null)
     {
@@ -93,7 +93,7 @@ class Shopgo_AdvIfconfig_Helper_Data extends Shopgo_Core_Helper_Abstract
      * @param string $configPath
      * @param array $requiredDepends
      * @param string $type
-     * @return boolean
+     * @return bool
      */
     public function getStoreConfigWithDependsFlag($configPath, $requiredDepends = array(), $type = 'tree')
     {
@@ -112,7 +112,7 @@ class Shopgo_AdvIfconfig_Helper_Data extends Shopgo_Core_Helper_Abstract
             }
 
             if ($type == 1 || $type == 'required') {
-                if (gettype($requiredDepends) == 'string') {
+                if (is_string($requiredDepends)) {
                     $requiredDepends = array_map('trim', explode(',', $requiredDepends));
                 }
 

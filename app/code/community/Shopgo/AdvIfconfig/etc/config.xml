@@ -20,7 +20,7 @@
 <config>
     <modules>
         <Shopgo_AdvIfconfig>
-            <version>1.0.2</version>
+            <version>1.0.3</version>
         </Shopgo_AdvIfconfig>
     </modules>
     <global>

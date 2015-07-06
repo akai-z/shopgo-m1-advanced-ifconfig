@@ -3,7 +3,7 @@
 ### About Repository ###
 
 * Advanced Ifconfig Magento extension.
-* v1.0.2
+* v1.0.3
 
 ### Author ###
 
