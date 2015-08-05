@@ -8,7 +8,7 @@
     "description": "Advanced Ifconfig Magento extension",
     "require": {
         "magento-hackathon/magento-composer-installer": "*",
-        "shopgo/core": "dev-master"
+        "shopgo/core": "*"
     },
     "authors":[
         {
