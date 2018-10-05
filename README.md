@@ -1,4 +1,4 @@
-# ShopGo Advanced Ifconfig #
+# ShopGo Advanced Ifconfig `[UNMAINTAINED]` #
 
 ### About Repository ###
 
